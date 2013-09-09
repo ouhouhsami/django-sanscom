@@ -1,0 +1,40 @@
+{% load i18n utils_tags %}
+{% if sent_mail %}
+{% else %}
+{% if user.is_authenticated %}
+<div class="panel panel-default panel-info">
+	<div class="panel-heading">
+		<h4 class="panel-title">Contacter le vendeur</h4>
+	</div>
+	<div class="panel-body">
+		<form  action="" method="POST" >
+			{% csrf_token %}
+			<div class="form-group">
+				{{ contact_form.message }}
+			</div>
+			<button class="btn btn-large btn-block btn-primary" type="submit">{% trans "Envoyer votre message" %}</button>
+		</form>
+		<p>
+			{% if ad.user.my_profile.phone_number %}
+			<b>{% trans "Téléphone du vendeur" %}</b> : 
+			{{ ad.user.my_profile.phone_number }}
+			{% endif %}
+		</p>
+	</div>
+</div>
+<div>
+
+</div>
+{% else %}
+<div class="alert alert-info">
+	{% trans "Pour contacter le vendeur" %}, <a href="{% url "userena_signup" %}" class="alert-link">{% trans "inscrivez-vous" %}</a> {% trans "ou" %} <a href="{% url "userena_signin" %}?next={{ request.path }}" class="alert-link">{% trans "connectez-vous" %}</a> !
+</div>
+{% endif %}
+{% endif %}
+
+<div class="lister vcard">
+	{% if ad.user.my_profile.phone_number %}
+	<abbr title="{{ ad.user.my_profile.phone_number }}" class="tel"></abbr>
+	{% endif %}
+	<abbr title="{{ ad.user.email|email_local_part }}" class="fn"></abbr>
+</div>

@@ -1,0 +1,74 @@
+{% extends "base-simplepage.html" %}
+
+{% block media %}
+{{ block.super }}
+{{ form.media }}
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+	<div class="col-md-offset-2 col-md-8">
+
+		<div class="panel panel-info">
+
+			<div class="panel-heading">
+				<h3 class="panel-title">Votre recherche</h3>
+			</div>
+			<div class="panel-body">
+				<p class="lead">
+					{% autoescape off %}{{ object }}{% endautoescape %} 
+				</p>
+				{% if object.public %}
+				{% if object.description %}
+				<h5>Message destiné aux vendeurs</h5>
+				<blockquote>{{ object.description|linebreaksbr }}</blockquote>
+				{% endif %}
+								<div class="alert alert-success">
+					Votre recherche est publique : les vendeurs ayant un bien correpondant à votre recherche peuvent vous contacter par l'intermédiaire du site.
+				</div>
+				{%else%}
+				<div class="alert alert-warning">
+					Votre recherche n'est pas publiée sur le site.
+					<br />
+					Les vendeurs ne peuvent pas vous contacter pour vous proposer un bien correspondant à cette recherche.
+					<br />
+					Pour publier cette annonce, modifiez le formulaire ci-dessous.
+				</div>
+				{% endif %}
+
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Modifier votre recherche</h3>
+			</div>
+			<div class="panel-body">
+				<form action="" method="POST" role="form">
+					{% csrf_token %}
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								{{ form.public }}
+								{{ form.public.label }}
+							</label>
+							<span class="help-block">{{ form.public.help_text }}</span>
+						</div>
+					</div>
+					<div class="form-group description">
+						<label >{{ form.description.label }}</label>
+						{{ form.description }}
+						<span class="help-block">{{ form.description.help_text }}</span>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<input type="submit" class="btn btn-primary btn-block" value="Valider les modifications" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

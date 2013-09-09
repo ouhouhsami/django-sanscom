@@ -1,0 +1,57 @@
+{% load l10n pagination_tags sorting_tags ads_tag utils_tags compress i18n %}
+
+
+{% autosort ads_list as sorted_objects %}
+{% autopaginate sorted_objects 10 as object_list %}
+
+<div id="results_detail" style="display:none;">
+	{% for ad in object_list %}
+		{% include 'geoads/view_popup.html' %}
+	{% endfor %}
+</div>
+
+
+<div id="results">
+	{% if ads_list %}
+	<table class="table table-striped table-condensed">
+		<caption>
+			<h3 class="page-header" style="padding-left:10px;padding-right:10px">{% trans title %}
+			</h3>
+		</caption>
+		<thead>
+		<tr>
+			<th></th>
+			{% include 'geoads/result_header.html' %}
+			<th></th>
+		</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="7">{% paginate %}</td>
+			</tr>
+		</tfoot>
+		<tbody>
+		{% for ad in object_list %}
+		<tr class="{% cycle 'even' 'odd' %}">
+			<td>
+				<a href="#" class="btn btn-default btn-sm" onclick="open_popup({{ ad.location.coords.0|unlocalize }}, {{ ad.location.coords.1|unlocalize }}, 'ad_{{ ad.id }}'); return false;"> <i class="icon-map-custommarker"></i> Localiser	
+				</a>
+			</td>
+			{% include 'geoads/result_item.html' with ad=ad only %}
+			<td>
+				<a class="btn btn-default btn-sm"  href="{{ ad.get_absolute_url }}" target="_blank">
+					{% trans "Détail" %} <i class="glyphicon {% if ad.pictures.all %}glyphicon-camera{% endif %}"></i>
+				</a>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% for ad in object_list %}
+		<script>add_home({{ ad.location.coords.0|unlocalize }}, {{ ad.location.coords.1|unlocalize }}, "{% url "view" ad.slug %}", 'ad_{{ ad.id }}', '{{ visible }}',  ' {{ad.icon}} ')</script>
+	{% endfor %}
+	
+	{% else %}
+	{% comment %}{% trans "Pas de résultats, élargissez votre recherche." %}{% endcomment %}
+	{% endif %}
+</div>

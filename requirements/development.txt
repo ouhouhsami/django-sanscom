@@ -1,0 +1,10 @@
+django-geoads==0.0.2
+django-floppyforms==1.1
+django-rq-dashboard==0.2
+django-pagination==1.0.7
+django-userena==1.2.3
+django-bootstrap-form==2.0.5
+django-compressor==1.3
+django-smart-extends==0.6
+django-debug-toolbar==0.8.5
+-e git+http://github.com/ouhouhsami/django-sorting.git@ed3f1d1af93f3aa14381411c363a8fb9505c7061#egg=django-sorting

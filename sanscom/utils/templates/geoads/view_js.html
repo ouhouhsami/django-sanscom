@@ -1,0 +1,19 @@
+{% load l10n %}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+ <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
+ <![endif]-->
+<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
+<script>
+$(document).ready(function(){
+	var latLng = [{{ ad.location.coords.1|unlocalize }}, {{ ad.location.coords.0|unlocalize }}]
+	var map = L.map('map_locate').setView(latLng, 13);
+	L.tileLayer('http://{s}.tile.cloudmade.com/cdf5c675c08548d1bb4ea612f3319b62/997/256/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+	}).addTo(map);
+	var icon = L.icon({iconUrl:'{{ ad.icon }}', iconSize: [32, 37], iconAnchor: [16, 36], clickable:false});
+	var marker = new L.marker(latLng, {icon: icon});
+	marker.addTo(map);
+});
+</script>

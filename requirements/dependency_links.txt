@@ -1,0 +1,1 @@
+http://github.com/ouhouhsami/django-sorting/tarball/ed3f1d1af93f3aa14381411c363a8fb9505c7061#egg=django-sorting-0.1-1

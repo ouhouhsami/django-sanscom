@@ -1,0 +1,67 @@
+{% extends "base-simplepage.html" %}
+{% load ads_tag i18n l10n %}
+
+{% block title %}{{ site.name }} | {% trans 'Acheteurs potentiels' %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+	<h2><small>{% trans "Acheteurs potentiels" %}</small> {{ object }}</h2>
+</div>
+<div class="row">
+	
+	<div class="col-md-6">
+		{% if object_list.not_contacted|length == 0 %}
+		Vous avez contacté tous les acheteurs
+		{% else %}
+		{% with total=object_list.not_contacted|length %}
+		<h3>{{ total }} acheteur{{ total|pluralize }} à contacter</h3>
+		{% endwith %}
+		{% for ad_search_result in object_list.not_contacted %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h4 class="panel-title">{% trans "Acheteur potentiel" %}</h4>
+			</div>
+			<div class="panel-body">
+				{% autoescape off %}{{ ad_search_result.ad_search }}{% endautoescape %}
+				<p>{% if ad_search_result.ad_search.description %}</p>
+				<blockquote>{{ ad_search_result.ad_search.description|linebreaks }}</blockquote>
+				{% endif %}
+				{% if ad_search_result.contacted %}
+				<span class="label label-warning">Déjà contacté</span>
+				{% else %}
+				{% endif %}
+				<form class="form-horizontal" method="POST" action="{{ ad_search_result.form_action }}">
+					{% csrf_token %} 
+					{{ ad_search_result.form.as_p }}
+					<input type="submit" class="btn btn-primary btn-block" value="Envoyer"/> 
+				</form>
+			</div>
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+
+	<div class="col-md-6">
+		{% if object_list.contacted|length == 0 %}
+		{% else %}
+		{% with total=object_list.contacted|length %}
+		<h3>{{ total }} acheteur{{ total|pluralize }} contacté{{ total|pluralize }}</h3>
+		{% endwith %}
+		{% for ad_search_result in object_list.contacted %}
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h4 class="panel-title">{% trans "Acheteur potentiel" %} <span class="label label-warning">Déjà contacté</span></h4>
+			</div>
+			<div class="panel-body">
+				{% autoescape off %}{{ ad_search_result.ad_search }}{% endautoescape %}
+				<p>{% if ad_search_result.ad_search.description %}</p>
+				<blockquote>{{ ad_search_result.ad_search.description|linebreaks }}</blockquote>
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+	
+</div>
+{% endblock %}

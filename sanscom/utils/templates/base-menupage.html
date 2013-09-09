@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block site %}
+	{% block messages %}
+		{% if messages %}
+		<div id="messages">
+				{% for message in messages %}
+				<div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+					{% autoescape off %}{{ message }}{% endautoescape %}
+				</div>
+				{% endfor %}
+		</div>
+		{% endif %}
+	{% endblock messages %}
+	<div id="content"  class="well" style="border:0px">
+	<ul class="outline nav nav-pills">
+		{% block menu %}
+		{% include 'geoads/menu.html' with selected=0 only %}
+		{% endblock menu %}
+	</ul>
+		{% block userena-content %}{% block content %}{% endblock %}{% endblock %}
+	</div>
+{% endblock site %}

@@ -1,0 +1,36 @@
+{% load ads_tag utils_tags i18n %}
+{% if ad.pictures.all %}
+    <div id="myCarousel" class="carousel slide">
+
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    {% for img in ad.pictures.all %}
+    <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter = 1 %}active{% endif %}"></li>
+    {% endfor %}
+  </ol>
+
+
+    <div class="carousel-inner">
+    {% for img in ad.pictures.all %}
+    <div class="{% if forloop.counter = 1 %}active{% endif %} item">
+    	<img src="{% thumbnail img.image 630 380 %}" rel="#img_{{ img.id }}" {% if img.title %}alt="{{ img.title }}"{% endif %}/>
+		<div class="carousel-caption">
+			<h4>{% if img.title %}{{ img.title|title }}{% else %}Photo n°{{forloop.counter}}{% endif %}</h4>
+		</div>
+    </div>
+    {% endfor %}
+    </div>
+    {% if ad.pictures.all|length > 1 %}
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="icon-next"></span>
+  </a>
+    {% endif %}
+    </div>
+{% else %}
+<div class="muted" style="width:100%; height:373px;text-align: center;vertical-align: center; background-color:#eee">
+    <div  style="line-height: 373px;height:373px;">Pas de photos disponibles pour ce bien</div>
+</div>
+{% endif %}

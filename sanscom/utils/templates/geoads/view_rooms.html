@@ -1,0 +1,15 @@
+{% load i18n %}
+{% if ad.separate_dining_room or ad.separate_toilet or ad.bathroom or ad.shower or ad.separate_entrance %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Pièces</h4>
+    </div>
+<ul class="list-group">
+{% if ad.separate_dining_room %}<li class="list-group-item">{% trans "Cuisine séparée" %}</li>{% endif %}
+{% if ad.separate_toilet %}<li class="list-group-item">{{ ad.separate_toilet }} {% trans "toilette" %}{{ ad.separate_toilet|pluralize }} séparée{{ ad.separate_toilet|pluralize }}</li>{% endif %}
+{% if ad.bathroom %}<li class="list-group-item">{{ ad.bathroom }} {% trans "salle de bain" %}</li>{% endif %}
+{% if ad.shower %}<li class="list-group-item">{{ ad.shower }} {% trans "douche" %}{{ ad.shower|pluralize }}</li>{% endif %}
+{% if ad.separate_entrance %}<li class="list-group-item">{% trans "Entrée séparée" %}</li>{% endif %}
+</ul>
+</div>
+{% endif %}

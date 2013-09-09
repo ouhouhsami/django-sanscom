@@ -1,0 +1,88 @@
+{% load static i18n compress %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	{% block meta %}
+	{% endblock %}
+
+	<title>
+		{% block title %} | {% trans "Annonces immobilières sans intermédiaires et géolocalisées" %}{% endblock %}
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	{% block media %}
+
+	{% compress css %}
+	<link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}css/base.css" />
+	{% endcompress %}
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+	
+	{% endblock %}
+
+	<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount','{{ Account }}']);
+	_gaq.push(['_setDomainName', '{{ DomainName }}']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<div class="navbar navbar-fixed-top navbar-inverse">
+			<div class="container">
+				{% include 'site_title.html' %}
+				
+				<div class="collapse navbar-collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+					<li>
+						<a href="{% url "userena_profile_detail" user.username %}" class="focus">{% trans "Mon compte" %}</a>
+					</li>
+					<li>
+						<a href="{% url "userena_signout" %}">{% trans "Se Déconnecter" %}</a>
+					</li>
+					{% else %}
+					<li>
+						<a href="{% url "userena_signup" %}" id="signup" class="focus" data-content="Inscrivez-vous pour créer une alerte email ou déposer une annonce de recherche pour être contacter directement par les vendeurs." rel="popover" data-original-title="Pourquoi s'inscrire ?">{% trans "S'Inscrire" %}
+						</a>
+					</li>
+					<script>  
+					$(document).ready(function() {
+						$("#signup").popover({'placement':'bottom', 'trigger':'hover'});
+					});  
+					</script> 
+					<li>
+						<a href="{% url "userena_signin" %}">{% trans "Se Connecter" %}</a>
+					</li>
+					<li class="divider-vertical"></li>
+					{% endif %}
+					{% include 'site_header_right.html' %}
+				</ul>
+			</div>
+			</div>
+		</div>
+		<div class="container" style="padding-top: 60px;">
+			{% block site %}
+			{% endblock site %}
+		</div>
+	</div>
+	<div id="footer">
+			<div class="container">
+				<div class="pull-left">© 2011-{% now "Y" %} {{ site.name }} 
+				</div>
+				<div class="pull-right"><a href="/a-propos/">{% trans "En savoir plus" %}</a> | <a href="/legal/">{% trans "Mentions légales" %}</a> | <a href="/cgu/">{% trans "Conditions d'utilisation" %}</a></div>
+			</div>
+	</div>
+</body>
+</html>

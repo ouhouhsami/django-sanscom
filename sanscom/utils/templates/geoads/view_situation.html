@@ -1,0 +1,40 @@
+{% load i18n %}
+{% if ad.floor or ad.orientation or ad.ground_floor or ad.duplex or ad.not_overlooked or ad.ground_surface %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">{% trans "Situation du logement" %}</h4>
+	</div>
+	<ul class="list-group">
+		{% if ad.floor %}
+		<li class="list-group-item">
+			{{ ad.floor }}<sup>e</sup> {% if ad.top_floor %}({% trans "et dernier" %}){% endif %} étage
+		</li>
+		{% endif %}
+		{% if ad.ground_floor %}
+		<li class="list-group-item">
+		{% trans "Rez-de-chaussé" %}
+		</li>
+		{% endif %}
+		{% if ad.duplex %}
+		<li class="list-group-item">
+		{% trans "Duplex" %}
+		</li>
+		{% endif %}
+		{% if ad.ground_surface %}
+		<li class="list-group-item">
+		{% trans "Surface du terrain" %} : {{ ad.ground_surface }} m²
+		</li>
+		{% endif %}
+		{% if ad.not_overlooked %}
+		<li class="list-group-item">
+		{% trans "Sans vis-à-vis" %}
+		</li>
+		{% endif %}
+		{% if ad.orientation %}
+		<li class="list-group-item">
+		{%  trans "Orientation" %} : {{ ad.orientation }}
+		</li>
+		{% endif %}
+	</ul>
+</div>
+{% endif %}

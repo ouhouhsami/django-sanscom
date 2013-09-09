@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ site.name }} | {% trans 'SansCom site admin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{{ site.name }}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block footer %}
+<div id="footer"><span id="version">Version {{ version }}</span></div>
+{% endblock %}

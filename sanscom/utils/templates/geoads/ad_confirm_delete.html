@@ -1,0 +1,25 @@
+{% extends "base-simplepage.html" %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-offset-2 col-md-8">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h3 class="panel-title">Suppression de votre annonce</h3>
+			</div>
+			<div class="panel-body">
+				<form action="" method="POST" class="form-horizontal">
+					{% csrf_token %}
+					<p>	Souhaitez-vous vraiment supprimer votre annonce ? <br /> 
+						<span class="lead">{% include 'geoads/resume.html' with ad=object.moderated_object.changed_object %}</span>
+					</p>
+					<input type="submit" class="btn btn-danger" value="Oui" />
+					<input class="btn" type="button" onclick="history.back()" value="Non" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,3 @@
+{% if append_text %}<div class="input-group">{% endif %}
+{% include 'floppyforms/input.html' %}{% if append_text %}<span class="input-group-addon">{{ append_text }}</span></div>{% endif %}
+{% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}

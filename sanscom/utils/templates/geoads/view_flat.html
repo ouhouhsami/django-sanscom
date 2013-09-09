@@ -1,0 +1,14 @@
+{% load i18n %}
+{% if ad.elevator or ad.intercom or ad.digicode or ad.doorman %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">{% trans "A propos de l'immeuble" %}</h4>
+</div>
+  <ul class="list-group">
+{% if ad.elevator %}<li class="list-group-item">{% trans "Ascenseur" %}</li>{% endif %}
+{% if ad.intercom %}<li class="list-group-item">{% trans "Interphone" %}</li>{% endif %}
+{% if ad.digicode %}<li class="list-group-item">{% trans "Digicode" %}</li>{% endif %}
+{% if ad.doorman %}<li class="list-group-item">{% trans "Gardien" %}{% endif %}
+</ul>
+</div>
+{% endif %}
